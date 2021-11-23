@@ -8,7 +8,7 @@ const Register = () => {
 	const email = useRef();
 	const password = useRef();
 	const passwordAgain = useRef();
-	const history = useNavigate();
+	const navigate = useNavigate();
 
 	const handleClick = async (e) => {
 		e.preventDefault();
@@ -22,7 +22,7 @@ const Register = () => {
 			};
 			try {
 				await axios.post("/auth/register", user);
-				history.push("/login");
+				navigate("/login");
 			} catch (err) {
 				console.log(err);
 			}
