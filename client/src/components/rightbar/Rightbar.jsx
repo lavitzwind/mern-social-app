@@ -1,13 +1,13 @@
 import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
 
-const Rightbar = ({ user }) => {
+export default function Rightbar({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const [friends, setFriends] = useState([]);
 	const { user: currentUser, dispatch } = useContext(AuthContext);
@@ -30,37 +30,35 @@ const Rightbar = ({ user }) => {
 	const handleClick = async () => {
 		try {
 			if (followed) {
-				await axios.put("/users/" + user._id + "/unfollow", {
+				await axios.put(`/users/${user._id}/unfollow`, {
 					userId: currentUser._id,
 				});
 				dispatch({ type: "UNFOLLOW", payload: user._id });
 			} else {
-				await axios.put("/users/" + user._id + "/follow", {
+				await axios.put(`/users/${user._id}/follow`, {
 					userId: currentUser._id,
 				});
 				dispatch({ type: "FOLLOW", payload: user._id });
 			}
-		} catch (err) {
-			console.log(err);
-		}
-		setFollowed(!followed);
+			setFollowed(!followed);
+		} catch (err) {}
 	};
 
 	const HomeRightbar = () => {
 		return (
 			<>
 				<div className="birthdayContainer">
-					<img src="assets/gift.png" alt="" className="birthdayImg" />
+					<img className="birthdayImg" src="assets/gift.png" alt="" />
 					<span className="birthdayText">
-						<b>Pola Foster</b> and <b>3 other friends</b> have a birthday today
+						<b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
 					</span>
 				</div>
-				<img src="assets/ad.png" alt="" className="rightbarAd" />
+				<img className="rightbarAd" src="assets/ad.png" alt="" />
 				<h4 className="rightbarTitle">Online Friends</h4>
 				<ul className="rightbarFriendList">
-					{Users.map((u) => {
-						return <Online key={u.id} user={u} />;
-					})}
+					{Users.map((u) => (
+						<Online key={u.id} user={u} />
+					))}
 				</ul>
 			</>
 		);
@@ -90,7 +88,7 @@ const Rightbar = ({ user }) => {
 						<span className="rightbarInfoValue">
 							{user.relationship === 1
 								? "Single"
-								: user.relationship === 2
+								: user.relationship === 1
 								? "Married"
 								: "-"}
 						</span>
@@ -121,7 +119,6 @@ const Rightbar = ({ user }) => {
 			</>
 		);
 	};
-
 	return (
 		<div className="rightbar">
 			<div className="rightbarWrapper">
@@ -129,6 +126,4 @@ const Rightbar = ({ user }) => {
 			</div>
 		</div>
 	);
-};
-
-export default Rightbar;
+}

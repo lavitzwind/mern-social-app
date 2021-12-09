@@ -3,8 +3,13 @@ import Topbar from "../../components/topbar/Topbar";
 import Conversation from "../../components/conversations/Conversation";
 import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
-
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 const Messenger = () => {
+	const { user } = useContext(AuthContext);
+
+	console.log(user);
+
 	return (
 		<>
 			<Topbar />;

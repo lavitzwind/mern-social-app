@@ -4,10 +4,10 @@ import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
 
-const Login = () => {
+export default function Login() {
 	const email = useRef();
 	const password = useRef();
-	const { user, isFetching, dispatch } = useContext(AuthContext);
+	const { isFetching, dispatch } = useContext(AuthContext);
 
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -17,14 +17,13 @@ const Login = () => {
 		);
 	};
 
-	console.log(user);
 	return (
 		<div className="login">
 			<div className="loginWrapper">
 				<div className="loginLeft">
 					<h3 className="loginLogo">Lamasocial</h3>
 					<span className="loginDesc">
-						Connect with friends and the world around you on Lamasocial
+						Connect with friends and the world around you on Lamasocial.
 					</span>
 				</div>
 				<div className="loginRight">
@@ -64,6 +63,4 @@ const Login = () => {
 			</div>
 		</div>
 	);
-};
-
-export default Login;
+}
